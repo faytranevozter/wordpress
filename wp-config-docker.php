@@ -32,9 +32,6 @@ define(
 // disallow file edit
 define('DISALLOW_FILE_EDIT', true);
 
-// force https
-$_SERVER['HTTPS'] = 'on';
-
 // IMPORTANT: this file needs to stay in-sync with https://github.com/WordPress/WordPress/blob/master/wp-config-sample.php
 // (it gets parsed by the upstream wizard in https://github.com/WordPress/WordPress/blob/f27cb65e1ef25d11b535695a660e7282b98eb742/wp-admin/setup-config.php#L356-L392)
 
@@ -52,6 +49,11 @@ if (!function_exists('getenv_docker')) {
 			return $default;
 		}
 	}
+}
+
+if (getenv_docker('FORCE_HTTPS', false)) {
+	// force https
+	$_SERVER['HTTPS'] = 'on';
 }
 
 // ** Database settings - You can get this info from your web host ** //
